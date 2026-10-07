@@ -1,0 +1,34 @@
+# Prod overlay: different namespace, image tag, replica count and resources.
+# Render it with:  kustomize build overlays/prod
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: prod
+namePrefix: prod-
+
+resources:
+  - ../../base
+
+# Change the image tag without touching the Deployment YAML.
+images:
+  - name: nginx
+    newTag: "1.27"
+
+# Change spec.replicas of the Deployment named "web" (name before the prefix).
+replicas:
+  - name: web
+    count: 3
+
+configMapGenerator:
+  - name: web-config
+    behavior: merge
+    literals:
+      - GREETING=hello from prod
+      # Plain kustomize leaves ${...} untouched. Flux replaces it AFTER the
+      # kustomize build (postBuild substitution); see ../../flux/.
+      - CLUSTER=${cluster_name:=unknown}
+
+# A strategic-merge patch: only the fields you write are changed, everything
+# else comes from the base. Containers are matched by "name".
+patches:
+  - path: deployment-resources.yaml

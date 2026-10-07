@@ -1,0 +1,18 @@
+# How Flux would deploy overlays/prod from a Git repository.
+# Flux runs the equivalent of `kustomize build ./overlays/prod`, then
+# substitutes ${var} placeholders using postBuild, then applies the result.
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: web-prod
+  namespace: flux-system
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: kustomize-demo
+  path: ./overlays/prod
+  prune: true
+  postBuild:
+    substitute:
+      cluster_name: prod-eu-1

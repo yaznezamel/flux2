@@ -1,0 +1,18 @@
+# Dev overlay: reuse the base and tweak a few things.
+# Render it with:  kustomize build overlays/dev
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dev          # set metadata.namespace on every object
+namePrefix: dev-        # web -> dev-web (references are updated too)
+
+resources:
+  - ../../base          # an overlay points at the base directory
+
+# Override values in the generated ConfigMap from the base.
+configMapGenerator:
+  - name: web-config
+    behavior: merge
+    literals:
+      - GREETING=hello from dev
+      - LOG_LEVEL=debug

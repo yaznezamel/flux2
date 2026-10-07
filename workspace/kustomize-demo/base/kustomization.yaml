@@ -1,0 +1,24 @@
+# The base: plain Kubernetes YAML plus a few kustomize transformers.
+# Render it with:  kustomize build base
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 1. Which raw manifests to include.
+resources:
+  - deployment.yaml
+  - service.yaml
+
+# 2. Labels added to every object (and, with includeSelectors, to selectors).
+labels:
+  - pairs:
+      app.kubernetes.io/name: web
+    includeSelectors: false
+
+# 3. Generate a ConfigMap. Kustomize appends a content hash to its name
+#    (web-config-<hash>) and updates every reference to it, so changing a
+#    value forces a rolling update of the Deployment.
+configMapGenerator:
+  - name: web-config
+    literals:
+      - GREETING=hello from base
+      - LOG_LEVEL=info
