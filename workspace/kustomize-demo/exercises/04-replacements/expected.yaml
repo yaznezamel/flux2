@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: staging-api
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: staging-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - env:
+        - name: API_HOST
+          value: staging-api
+        image: ghcr.io/example/frontend:3.1.0
+        name: frontend

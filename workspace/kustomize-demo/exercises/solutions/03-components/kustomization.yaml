@@ -1,0 +1,12 @@
+# This file is the "staging" overlay.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: staging
+
+resources:
+  - base
+
+components:
+  - components/monitoring
+  - components/debug

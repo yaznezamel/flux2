@@ -1,0 +1,17 @@
+# A Component is a reusable bundle of changes. Unlike an overlay it does
+# not have its own base: it is applied on top of whatever includes it.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: shop
+      spec:
+        template:
+          metadata:
+            annotations:
+              prometheus.io/scrape: "true"
+              prometheus.io/port: "8080"

@@ -22,6 +22,7 @@ kustomize-demo/
 │       ├── kustomization.yaml  # + image tag, replicas, a patch
 │       └── deployment-resources.yaml   # strategic-merge patch
 ├── flux/kustomization-prod.yaml        # how Flux would deploy overlays/prod
+├── exercises/                  # level 2: hands-on exercises with a checker
 └── render.sh                   # render everything and diff it
 ```
 
@@ -33,6 +34,7 @@ kustomize-demo/
 | `kubectl`   | `kubectl kustomize <dir>` is the same renderer, built in   |
 | `yq`        | pick fields out of rendered YAML                           |
 | `flux`      | `flux envsubst` reproduces Flux's `${var}` substitution    |
+| `helm`      | used by kustomize to render Helm charts (exercise 05)      |
 
 ## Try it
 
@@ -93,6 +95,12 @@ Things worth noticing in the output:
    field. Same result, different mechanism.
 4. Add `namePrefix: x-` to the base too and see that prefixes stack
    (`prod-x-web`).
+
+## Next: exercises
+
+When you are done with the experiments, continue with
+[`exercises/`](exercises/README.md): JSON patches, secretGenerator,
+components, replacements, and Helm charts inside Kustomize.
 
 ## How Flux fits in
 

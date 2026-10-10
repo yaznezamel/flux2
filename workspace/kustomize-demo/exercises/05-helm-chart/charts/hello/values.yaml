@@ -1,0 +1,6 @@
+# Default values. Override them with valuesInline in kustomization.yaml.
+replicaCount: 1
+image:
+  repository: nginx
+  tag: "1.25"
+message: hello from the chart defaults

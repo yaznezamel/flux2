@@ -1,0 +1,5 @@
+apiVersion: v2
+name: hello
+description: A tiny local chart for the kustomize exercises
+version: 0.1.0
+appVersion: "1.0.0"

@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# TODO: render the local chart in ./charts/hello with `helmCharts:`,
+# override its values, then patch the result. See README.md.

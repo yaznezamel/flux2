@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    team.example.com/owner: platform
+  name: api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - args:
+        - --port=8080
+        - --log-format=json
+        image: ghcr.io/example/api:1.0.0
+        name: api

@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmGlobals:
+  chartHome: charts
+
+helmCharts:
+  - name: hello
+    releaseName: web
+    valuesInline:
+      replicaCount: 2
+      image:
+        tag: "1.27"
+      message: hello from kustomize
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: web
+      spec:
+        template:
+          spec:
+            containers:
+              - name: hello
+                resources:
+                  limits:
+                    memory: 128Mi

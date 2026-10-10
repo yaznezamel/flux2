@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+
+# TODO: add a `secretGenerator:` that creates the two Secrets the
+# Deployment references. See README.md for the goal.
